@@ -65,7 +65,7 @@ public class UniformOrderStringGenerator implements StringGenerator {
     }
 
     private String generateOrders(Double price, String orderMarker) {
-        Stream<Integer> siSell = Stream.generate(() -> GeneratorsHelper.simpleIntegerDistributedGenerator().apply(10, 1000));
+        Stream<Integer> siSell = Stream.generate(() -> GeneratorsHelper.simpleIntegerDistributedGenerator().apply(1, 50));
         return siSell
                 .limit(GeneratorsHelper.simpleIntegerDistributedGenerator().apply(10, 1000))
                 .map(d -> generateOrder(price, d, orderMarker))
