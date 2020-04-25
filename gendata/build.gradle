@@ -1,2 +1,11 @@
 apply plugin: 'application'
 mainClassName = 'DataGenerator'
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'ru.shaprj.DataGenerator'
+        )
+    }
+}

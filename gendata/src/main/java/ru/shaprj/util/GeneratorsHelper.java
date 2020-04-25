@@ -3,25 +3,38 @@ package ru.shaprj.util;
  * Created by O.Shalaevsky on 24.04.2020
  */
 
-import java.util.Random;
-import java.util.function.UnaryOperator;
+import org.apache.commons.math3.random.RandomDataGenerator;
+
+import java.util.function.BiFunction;
 
 public class GeneratorsHelper {
 
     /*
      *
-     * Simple random Double generator
+     * Uniformly distributed Double generator
      *
-     * params:
-     *
-     *  limit - limiting output Double value
-     *
-     * returns next Double value
+     *@param low - lower limit for output value
+     *@param high - high limit for output value
+     *@return next Double value
      *
      * */
 
-    public static UnaryOperator<Double> simpleRandomGenerator() {
-        return (limit) -> new Random().nextDouble() % limit;
+    public static BiFunction<Double, Double, Double> uniformDoubleDistributedGenerator() {
+        return (low, high) -> new RandomDataGenerator().nextUniform(low, high);
+    }
+
+    /*
+     *
+     * Integer generator
+     *
+     *@param low - lower limit for output value
+     *@param high - high limit for output value
+     *@return next Double value
+     *
+     * */
+
+    public static BiFunction<Integer, Integer, Integer> simpleIntegerDistributedGenerator() {
+        return (low, high) -> new RandomDataGenerator().nextInt(low, high);
     }
 
 }

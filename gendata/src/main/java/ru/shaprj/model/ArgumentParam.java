@@ -4,19 +4,39 @@ public enum ArgumentParam {
 
     /*
     *
-    * Param for generator limit value
+    * Generator actives list
     *
     * */
 
-    GENERATOR_LIMIT_VALUE("-gl"),
+    GENERATOR_ACTIVES("ga"),
 
     /*
     *
-    * Param for data volume value
+    *  Generator sell lower treashold
     *
     * */
+    GENERATOR_SELL_LOW("gsl"),
 
-    GENERATOR_DATA_VOLUME_VALUE("-gdv");
+    /*
+     *
+     * Generator sell high treashold
+     *
+     * */
+    GENERATOR_SELL_HIGH("gsh"),
+
+    /*
+     *
+     *  Generator buy lower treashold
+     *
+     * */
+    GENERATOR_BUY_LOW("gbl"),
+
+    /*
+     *
+     * Generator buy high treashold
+     *
+     * */
+    GENERATOR_BUY_HIGH("gbh");
 
     private String value;
 
@@ -25,4 +45,7 @@ public enum ArgumentParam {
         this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
 }

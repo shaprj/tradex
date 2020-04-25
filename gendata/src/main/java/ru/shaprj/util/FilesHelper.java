@@ -13,6 +13,14 @@ public class FilesHelper {
 
     private static Logger log = LogManager.getLogger(FilesHelper.class);
 
+    /*
+     * Save bytes to file via limited buffer
+     *
+     * @param data bytes to save
+     * @param bufSize size of buffer
+     * @param blockOffset file name postfix value
+     * @param filePrefixe file name prefix value
+     * */
     public static void saveData(byte[] data, int bufSize, int blockOffset, String filePrefix){
 
         if(data.length < bufSize){
@@ -24,9 +32,15 @@ public class FilesHelper {
 
     }
 
+    /*
+    * Save bytes to file
+    *
+    * @param data bytes to save
+    * @param fileName name of file
+    * */
     public static void saveDataToFile(byte[] data, String fileName){
 
-        try(FileOutputStream fos = new FileOutputStream(fileName)){
+        try(FileOutputStream fos = new FileOutputStream(fileName, true)){
 
             fos.write(data);
 

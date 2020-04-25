@@ -3,18 +3,17 @@ package ru.shaprj;
  * Created by O.Shalaevsky on 24.04.2020
  */
 
-import ru.shaprj.model.ArgumentParam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.shaprj.generator.UniformOrderStringGenerator;
+import ru.shaprj.model.ArgumentParam;
 import ru.shaprj.util.ArgumentParserHelper;
 import ru.shaprj.util.FilesHelper;
-import ru.shaprj.util.GeneratorsHelper;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DataGenerator {
 
@@ -22,24 +21,45 @@ public class DataGenerator {
 
     static public void main(String[] args) {
 
-        Map<ArgumentParam, List<Object>> params = Arrays.stream(args)
-                .map(ArgumentParserHelper.inputArgumentsParser()::apply)
-                .collect(Collectors.toMap(m -> (ArgumentParam) m.keySet().toArray()[0], m -> (List<Object>) m.get(m.keySet().toArray()[0])));
+        String joinedArgs = Arrays.stream(args)
+                .collect(Collectors.joining(" "));
+
+        Map<ArgumentParam, List<String>> params = ArgumentParserHelper.inputArgumentsParser().apply(joinedArgs);
 
         if (!checkIfArgumentsLegal(params)) {
             log.info("Incorrect command line arguments values :(");
+            return;
         }
 
-        Stream<Double> si = Stream.generate(() -> GeneratorsHelper.simpleRandomGenerator().apply(99999.99));
-        Double [] prices = si.limit(10000).collect(Collectors.toList()).toArray(Double[]::new);
-        FilesHelper.saveData(prices, 2500, 0, "priceList");
+        params.get(ArgumentParam.GENERATOR_ACTIVES).stream()
+                .forEach(activeName -> {
+                    Double lowS = Double.valueOf(params.get(ArgumentParam.GENERATOR_SELL_LOW).get(0));
+                    Double highS = Double.valueOf(params.get(ArgumentParam.GENERATOR_SELL_HIGH).get(0));
+                    Double lowB = Double.valueOf(params.get(ArgumentParam.GENERATOR_BUY_LOW).get(0));
+                    Double highB = Double.valueOf(params.get(ArgumentParam.GENERATOR_BUY_HIGH).get(0));
+                    new UniformOrderStringGenerator(activeName, lowS, highS, lowB, highB, s ->
+                            FilesHelper.saveData(s.getBytes(), 25000, 0, "testDataFile")).generate();
+                });
 
     }
 
-    private static boolean checkIfArgumentsLegal(Map<ArgumentParam, List<Object>> params) {
+    private static ArgumentParam consumeKey(Map key){
+        System.out.println();
+        return null;
+    }
 
-        return params.containsKey(ArgumentParam.GENERATOR_DATA_VOLUME_VALUE) &&
-                params.containsKey(ArgumentParam.GENERATOR_DATA_VOLUME_VALUE);
+    private static List<String> consumeValue(Map key){
+        System.out.println("");
+        return null;
+    }
+
+    private static boolean checkIfArgumentsLegal(Map<ArgumentParam, List<String>> params) {
+
+        return params.containsKey(ArgumentParam.GENERATOR_ACTIVES) &&
+                params.containsKey(ArgumentParam.GENERATOR_SELL_LOW) &&
+                params.containsKey(ArgumentParam.GENERATOR_SELL_HIGH) &&
+                params.containsKey(ArgumentParam.GENERATOR_BUY_LOW) &&
+                params.containsKey(ArgumentParam.GENERATOR_BUY_HIGH);
 
     }
 

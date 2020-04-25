@@ -5,9 +5,7 @@ package ru.shaprj.util;
 
 import ru.shaprj.model.ArgumentParam;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,14 +16,19 @@ public class ArgumentParserHelper {
      * Parse arguments functor
      *
      *
+     *
      * */
 
-    static public Function<String, Map<ArgumentParam, List<Object>>> inputArgumentsParser() {
-        return s -> Arrays.stream(ArgumentParam.values())
-                .filter(p -> Arrays.stream(s.split("-"))
-                        .filter(ss -> ss.contains(p.toString()))
-                        .count() > 0)
-                .collect(Collectors.toMap(p -> p, p -> getObjectList(p, s)));
+    static public Function<String, Map<ArgumentParam, List<String>>> inputArgumentsParser() {
+        return s -> Arrays.stream(s.split("-"))
+                .filter(ss -> ss != null && !ss.equals(""))
+                .map(ss ->
+                        Arrays.stream(ArgumentParam.values())
+                                .filter(p -> ss.contains(p.getValue()))
+                                .map(p -> new AbstractMap.SimpleEntry(p, getObjectList(p, ss)))
+                                .collect(Collectors.toList()))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(Map.Entry<ArgumentParam, List<String>>::getKey, Map.Entry<ArgumentParam, List<String>>::getValue));
     }
 
     /*
@@ -34,8 +37,9 @@ public class ArgumentParserHelper {
      *
      * */
 
-    private static List<Object> getObjectList(ArgumentParam param, String s) {
+    private static List<String> getObjectList(ArgumentParam param, String s) {
         return Arrays.stream(s.split(" "))
+                .skip(1)
                 .filter(ss -> !ss.equals(param.toString()))
                 .collect(Collectors.toList());
     }
