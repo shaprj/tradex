@@ -1,3 +1,5 @@
 rootProject.name = 'tradex'
 include 'gendata'
+include 'aggdata'
+include 'common-utils'
 

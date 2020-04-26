@@ -1,4 +1,4 @@
-package ru.shaprj.model;
+package ru.shaprj.common.model;
 /*
  * Created by O.Shalaevsky on 25.04.2020
  *

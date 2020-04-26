@@ -1,4 +1,4 @@
-package ru.shaprj.model;
+package ru.shaprj.common.model;
 
 public enum ArgumentParam {
 

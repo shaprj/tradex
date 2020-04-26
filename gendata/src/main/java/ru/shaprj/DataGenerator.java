@@ -10,11 +10,11 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.shaprj.generator.OrderStringGenerator;
-import ru.shaprj.model.ArgumentParam;
+import ru.shaprj.common.model.ArgumentParam;
 import ru.shaprj.schedule.TimerScheduler;
-import ru.shaprj.util.ArgumentParserHelper;
 import ru.shaprj.util.FilesHelper;
 import ru.shaprj.util.GeneratorsHelper;
+import ru.shaprj.common.utils.ArgumentParserHelper;
 
 import java.nio.file.Paths;
 import java.util.Arrays;

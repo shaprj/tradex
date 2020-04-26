@@ -1,5 +1,5 @@
 apply plugin: 'application'
-mainClassName = 'DataGenerator'
+mainClassName = 'DataAggregator'
 
 dependencies {
     compile project(":common-utils")
@@ -9,7 +9,7 @@ jar {
     manifest {
         attributes(
                 'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'ru.shaprj.DataGenerator'
+                'Main-Class': 'ru.shaprj.DataAggregator'
         )
     }
 }
@@ -18,14 +18,14 @@ task fatJarAndCopy(type: Jar) {
     manifest {
         attributes(
                 'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'ru.shaprj.DataGenerator'
+                'Main-Class': 'ru.shaprj.DataAggregator'
         )
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 
     copy {
-        from 'build/libs/gendata-1.0-SNAPSHOT.jar'
+        from 'build/libs/aggdata-1.0-SNAPSHOT.jar'
         into "../deploy"
     }
 

@@ -6,7 +6,7 @@ package ru.shaprj.generator;
  *
  */
 
-import ru.shaprj.model.OrderParam;
+import ru.shaprj.common.model.OrderParam;
 import ru.shaprj.util.FormatterHelper;
 import ru.shaprj.util.GeneratorsHelper;
 

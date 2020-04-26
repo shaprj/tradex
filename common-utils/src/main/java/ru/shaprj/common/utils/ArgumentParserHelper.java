@@ -1,9 +1,8 @@
-package ru.shaprj.util;
+package ru.shaprj.common.utils;
 /*
  * Created by O.Shalaevsky on 24.04.2020
  */
-
-import ru.shaprj.model.ArgumentParam;
+import ru.shaprj.common.model.ArgumentParam;
 
 import java.util.*;
 import java.util.function.Function;

@@ -10,6 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/aggdata" />
+            <option value="$PROJECT_DIR$/common-utils" />
             <option value="$PROJECT_DIR$/gendata" />
           </set>
         </option>
