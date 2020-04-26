@@ -50,7 +50,29 @@ public enum ArgumentParam {
      * Generator period in milliseconds
      *
      * */
-    GENERATOR_PERIOD_MILLS("gpm");
+    GENERATOR_PERIOD_MILLS("gpm"),
+
+    /*
+     *
+     * Consumer topic name
+     *
+     * */
+    CONSUMER_TOPIC_NAME("ctn"),
+
+    /*
+     *
+     * Consumer Apache Kafka group id
+     *
+     * */
+    CONSUMER_KAFKA_GROUP_ID("cgi"),
+
+    /*
+     *
+     * Consumer Apache Kafka client id
+     *
+     * */
+    CONSUMER_KAFKA_CLIENT_ID("cci");
+
 
     private String value;
 

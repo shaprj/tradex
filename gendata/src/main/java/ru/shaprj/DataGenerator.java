@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import ru.shaprj.generator.OrderStringGenerator;
 import ru.shaprj.common.model.ArgumentParam;
 import ru.shaprj.schedule.TimerScheduler;
-import ru.shaprj.util.FilesHelper;
+import ru.shaprj.common.utils.FilesHelper;
 import ru.shaprj.util.GeneratorsHelper;
 import ru.shaprj.common.utils.ArgumentParserHelper;
 
@@ -29,7 +29,7 @@ public class DataGenerator {
 
     private static final String FILE_NAME_PREFIX = "testDataFile";
 
-    private static final String KAFKA_TOPIC_NAME = "aggregate-order-data";
+    private static final String KAFKA_TOPIC_NAME = "AggregateOrderData";
 
     private static int fileNamePostfix = 1;
 

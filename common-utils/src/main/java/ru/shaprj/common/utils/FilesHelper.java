@@ -1,15 +1,19 @@
-package ru.shaprj.util;
+package ru.shaprj.common.utils;
 /*
  * Created by O.Shalaevsky on 24.04.2020
  */
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 public class FilesHelper {
 
@@ -51,6 +55,29 @@ public class FilesHelper {
         } catch (IOException e) {
             log.error(e.getStackTrace());
         }
+    }
+
+    /*
+    *
+    * Read file strings
+    *
+    * @param fileName name of file
+    * @param stringsConsumer consumer of string
+    *
+    * */
+
+    public static void readDataFromFile(String fileName, Consumer<String> stringConsumer){
+
+        try (LineIterator it = FileUtils.lineIterator(new File(fileName), "UTF-8")) {
+
+            while (it.hasNext()) {
+                stringConsumer.accept(it.nextLine());
+
+            }
+        } catch (IOException e) {
+            log.error(e.getStackTrace());
+        }
+
     }
 
 }
