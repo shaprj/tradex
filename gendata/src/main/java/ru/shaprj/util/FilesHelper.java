@@ -6,7 +6,9 @@ package ru.shaprj.util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class FilesHelper {
@@ -21,9 +23,9 @@ public class FilesHelper {
      * @param blockOffset file name postfix value
      * @param filePrefixe file name prefix value
      * */
-    public static void saveData(byte[] data, int bufSize, int blockOffset, String filePrefix){
+    public static void saveData(byte[] data, int bufSize, int blockOffset, String filePrefix) {
 
-        if(data.length < bufSize){
+        if (data.length < bufSize) {
             saveDataToFile(data, String.format("%s_%s", filePrefix, blockOffset));
         } else {
             saveDataToFile(Arrays.copyOfRange(data, 0, bufSize), String.format("%s_%s", filePrefix, blockOffset));
@@ -33,16 +35,18 @@ public class FilesHelper {
     }
 
     /*
-    * Save bytes to file
-    *
-    * @param data bytes to save
-    * @param fileName name of file
-    * */
-    public static void saveDataToFile(byte[] data, String fileName){
+     * Save bytes to file
+     *
+     * @param data bytes to save
+     * @param fileName name of file
+     * */
+    public static void saveDataToFile(byte[] data, String fileName) {
 
-        try(FileOutputStream fos = new FileOutputStream(fileName, true)){
+        int bufferSize = 100 * 1024 * 1024;
 
-            fos.write(data);
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(fileName, true), bufferSize)) {
+
+            bos.write(data);
 
         } catch (IOException e) {
             log.error(e.getStackTrace());

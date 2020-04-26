@@ -7,7 +7,7 @@ public class FormatterHelper {
 
     private final static String orderPattern = "%s;%.2f;%d;%s;\r\n";
 
-    public static String getOrderFormatted(String active, Double price, Integer ordersCount, String orderMarker){
+    public static String getOrderFormatted(String active, Double price, Integer ordersCount, String orderMarker) {
         return String.format(orderPattern, active, price, ordersCount, orderMarker);
     }
 

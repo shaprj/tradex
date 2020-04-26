@@ -3,18 +3,18 @@ package ru.shaprj.model;
 public enum ArgumentParam {
 
     /*
-    *
-    * Generator actives list
-    *
-    * */
+     *
+     * Generator actives list
+     *
+     * */
 
     GENERATOR_ACTIVES("ga"),
 
     /*
-    *
-    *  Generator sell lower treashold
-    *
-    * */
+     *
+     *  Generator sell lower treashold
+     *
+     * */
     GENERATOR_SELL_LOW("gsl"),
 
     /*
@@ -36,11 +36,25 @@ public enum ArgumentParam {
      * Generator buy high treashold
      *
      * */
-    GENERATOR_BUY_HIGH("gbh");
+    GENERATOR_BUY_HIGH("gbh"),
+
+    /*
+     *
+     * Generator volume of generated data
+     *
+     * */
+    GENERATOR_VOLUME("gv"),
+
+    /*
+     *
+     * Generator period in milliseconds
+     *
+     * */
+    GENERATOR_PERIOD_MILLS("gpm");
 
     private String value;
 
-    ArgumentParam(String value){
+    ArgumentParam(String value) {
 
         this.value = value;
     }

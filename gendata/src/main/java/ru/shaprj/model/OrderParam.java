@@ -7,19 +7,19 @@ package ru.shaprj.model;
 public class OrderParam {
 
     /*
-    * active name
-    * */
+     * active name
+     * */
 
     private String active;
 
     /*
-    * low sell price treashold
-    * */
+     * low sell price treashold
+     * */
     private Double lowSell;
 
     /*
-    * high sell price treashold
-    * */
+     * high sell price treashold
+     * */
     private Double highSell;
 
     /*
