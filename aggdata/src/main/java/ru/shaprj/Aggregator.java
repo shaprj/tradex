@@ -32,7 +32,7 @@ public class Aggregator {
 
         if (!checkIfArgumentsLegal(params)) {
             log.info("Incorrect command line arguments values :(");
-            log.info("Example: -ctn aggregate-order-data -cgi group1 -cci client1");
+            log.info("Example: -ctn AggregateOrderData -cgi group1 -cci client1");
             return;
         }
         String topic = params.get(ArgumentParam.CONSUMER_TOPIC_NAME).get(0);
@@ -40,28 +40,9 @@ public class Aggregator {
         String clientId = params.get(ArgumentParam.CONSUMER_TOPIC_NAME).get(0);
         MessageBrokerConsumers.subscribeKafkaTopic(topic, groupId, clientId, fileName -> {
             log.info(String.format("Preparing to aggregate file: '%s'", fileName));
-            Aggregators.insertIntoRedisMemCacheAndGroup(fileName);
+            Aggregators.insertInTreeMap(fileName);
             log.info(String.format("Complete aggregation of file: '%s'", fileName));
         });
-    }
-
-    private static class OrderParams{
-        private final Integer count;
-        private final String markerOrder;
-
-        public OrderParams(Integer count, String markerOrder){
-
-            this.count = count;
-            this.markerOrder = markerOrder;
-        }
-
-        public Integer getCount() {
-            return count;
-        }
-
-        public String getMarkerOrder() {
-            return markerOrder;
-        }
     }
 
     private static boolean checkIfArgumentsLegal(Map<ArgumentParam, List<String>> params) {
