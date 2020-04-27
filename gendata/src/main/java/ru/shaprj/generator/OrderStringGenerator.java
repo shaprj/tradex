@@ -81,9 +81,7 @@ public class OrderStringGenerator implements StringGenerator {
     }
 
     private void generate(String orderMarker, Double low, Double high, int bufferSize, double noise) {
-        Stream<Double> sd = Stream.generate(() -> {
-            return GeneratorsHelper.uniformDoubleDistributedGenerator().apply(low + noise, high + noise);
-        });
+        Stream<Double> sd = Stream.generate(() -> GeneratorsHelper.uniformDoubleDistributedGenerator().apply(low + noise, high + noise));
         String data = sd
                 .parallel()
                 .limit(bufferSize)
