@@ -59,6 +59,10 @@ public class Aggregators {
     private static TreeMap<Double, Integer> ordersSortedBuy = new TreeMap<>(Collections.reverseOrder());
 
     public static void insertInTreeMap(String fileName){
+
+        ordersSortedSell.clear();
+        ordersSortedBuy.clear();
+
         FilesHelper.readDataFromFile(fileName, s -> {
             String trimmed = s.trim();
             String[] splited = trimmed.substring(0, trimmed.lastIndexOf(";")).split(";");

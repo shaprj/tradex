@@ -10,6 +10,7 @@ import ru.shaprj.common.model.OrderParam;
 import ru.shaprj.util.FormatterHelper;
 import ru.shaprj.util.GeneratorsHelper;
 
+import java.util.Random;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -51,19 +52,20 @@ public class OrderStringGenerator implements StringGenerator {
     public void generate() {
         new DoWithPercent(() -> {
         }, 0);
-        new DoWithPercent(() -> generate("S", lowSell, highSell), 50);
-        new DoWithPercent(() -> generate("B", lowBuy, highBuy), 100);
+        double noise = calcNoise(lowBuy);
+        new DoWithPercent(() -> generate("S", lowSell, highSell, noise), 50);
+        new DoWithPercent(() -> generate("B", lowBuy, highBuy, noise), 100);
     }
 
-    private void generate(String orderMarker, Double low, Double high) {
+    private void generate(String orderMarker, Double low, Double high, double noise) {
         if (BUFFER_SIZE >= volume) {
-            generate(orderMarker, low, high, volume);
+            generate(orderMarker, low, high, volume, noise);
         } else {
             int count = (volume % BUFFER_SIZE == 0) ?
                     volume / BUFFER_SIZE :
                     volume / BUFFER_SIZE + 1;
             for (int i = 0; i < count; i++) {
-                generate(orderMarker, low, high, BUFFER_SIZE);
+                generate(orderMarker, low, high, BUFFER_SIZE, noise);
             }
         }
     }
@@ -78,8 +80,10 @@ public class OrderStringGenerator implements StringGenerator {
         }
     }
 
-    private void generate(String orderMarker, Double low, Double high, int bufferSize) {
-        Stream<Double> sd = Stream.generate(() -> GeneratorsHelper.uniformDoubleDistributedGenerator().apply(low, high));
+    private void generate(String orderMarker, Double low, Double high, int bufferSize, double noise) {
+        Stream<Double> sd = Stream.generate(() -> {
+            return GeneratorsHelper.uniformDoubleDistributedGenerator().apply(low + noise, high + noise);
+        });
         String data = sd
                 .parallel()
                 .limit(bufferSize)
@@ -89,11 +93,16 @@ public class OrderStringGenerator implements StringGenerator {
     }
 
     private String generateOrders(Double price, String orderMarker) {
-        Stream<Integer> si = Stream.generate(() -> GeneratorsHelper.simpleIntegerDistributedGenerator().apply(1, 20));
+        Stream<Integer> si = Stream.generate(() -> GeneratorsHelper.simpleIntegerDistributedGenerator().apply(1, 5));
         return si
-                .limit(GeneratorsHelper.simpleIntegerDistributedGenerator().apply(10, 50))
+                .limit(GeneratorsHelper.simpleIntegerDistributedGenerator().apply(1, 10))
                 .map(d -> FormatterHelper.getOrderFormatted(active, price, d, orderMarker))
                 .collect(Collectors.joining());
+    }
+
+    private double calcNoise(double value){
+        int divider = (10 + Math.abs(new Random().nextInt(20)) % 20);
+        return value / divider;
     }
 
     public void setFileSaver(Consumer<String> fileSaver) {
