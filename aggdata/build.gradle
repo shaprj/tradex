@@ -29,7 +29,8 @@ task fatJarAndCopy(type: Jar) {
         into "../deploy"
     }
 
-    task deleteDeploy(type: Delete) {
-        delete "../deploy"
-    }
+}
+
+task deleteDeploy(type: Delete) {
+    delete "../deploy"
 }
